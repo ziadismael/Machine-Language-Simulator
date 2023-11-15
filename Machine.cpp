@@ -47,3 +47,13 @@ void Machine::loadtoMemory()
 	file.close();
 	cout << "Program loaded in memory starting from the address: " << hex << starting_address << endl;
 }
+
+void Machine::clearRegister()
+{
+	for (size_t i = 0; i < 16; i++)
+	{
+		registers[i].setValue("00");
+	}
+	starting_address = resetting_adress;
+	cout << "Registers has been cleared." << endl;
+}
