@@ -58,6 +58,90 @@ void Machine::clearRegister()
 	cout << "Registers has been cleared." << endl;
 }
 
+void Machine::runMachine(int l)
+{
+	PC = starting_address;
+	string cellInstruction = memory.cells[starting_address];
+	cellInstruction += memory.cells[starting_address + 1];
+	IR = cellInstruction;
+	char opcode;
+	opcode = cellInstruction[0];
+
+	string registernum;
+	registernum = cellInstruction[1];
+	int registerNum = stoi(registernum, nullptr, 16);
+
+	string x;
+	x = cellInstruction[2];
+	int X = stoi(x, nullptr, 16);
+
+	string y;
+	y = cellInstruction[3];
+	int Y = stoi(y, nullptr, 16);
+
+	//XY
+	string xy = cellInstruction.substr(2);
+	int XY = stoi(xy, nullptr, 16);
+
+
+	string s0, s1;
+	Instruction* op_one = nullptr, * op_two, * op_three, * op_four, * op_five;
+	switch (opcode)
+	{
+	case '1':
+
+		op_one = new LoadInstructionM(registers[registerNum], memory, XY);
+		op_one->excute();
+		break;
+
+	case '2':
+
+		op_two = new LoadInstructiond(xy, registers[registerNum]);
+		op_two->excute();
+		break;
+
+	case '3':
+
+		op_three = new StoreatMemory(XY, registers[registerNum], memory);
+		op_three->excute();
+		break;
+
+	case '4':
+
+		op_four = new MovetoRegister(registers[X], registers[Y]);
+		op_four->excute();
+		break;
+
+	case '5':
+
+		op_five = new AddComopliments(registers[X], registers[Y], registers[registerNum], alu);
+		op_five->excute();
+		break;
+	case 'B':
+		s0 = registers[0].getValue();
+		s1 = registers[registerNum].getValue();
+		if (s0 == s1)
+		{
+			starting_address = XY;
+		}
+		break;
+	case 'C':
+		cellInstruction = "0000";
+		cout << "program has stopped" << endl;
+
+		break;
+
+	default:
+		cout << "Program has ended.";
+		break;
+	}
+
+
+	starting_address += 2;
+	cellInstruction = memory.cells[starting_address];
+	cellInstruction += memory.cells[starting_address + 1];
+}
+
 void Machine::runMachine()
 {
 	string cellInstruction = memory.cells[starting_address];
