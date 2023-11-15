@@ -57,3 +57,55 @@ void Machine::clearRegister()
 	starting_address = resetting_adress;
 	cout << "Registers has been cleared." << endl;
 }
+
+void Machine::displayBgad()
+{	
+	int Screen_Ascii = stoi(memory.cells[0], nullptr, 16);
+	char screenSymbol;
+	if (Screen_Ascii == 0)
+		screenSymbol = ' ';
+	else
+		screenSymbol = Screen_Ascii;
+
+	cout << endl;
+	cout << "		  +------------------------------------------------------------+        +-----------------+      \n";
+	cout << "		  |  PC: " << hex << PC << "                                         IR: " << IR << "    |        |     Screen      |      \n";
+	cout << "		  +------------------------------------------------------------+        +-----------------+      \n";
+	cout << "		  |                            Memory                          |        |                 |      \n";
+	cout << "		  +------------------------------------------------------------+        |        "  << screenSymbol << "        | \n";
+	cout << "		  |                                                            |        |                 |      \n";
+	cout << "	 (Address)|       0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F       |        +-----------------+      \n";
+	cout << "		  +------------------------------------------------------------+                                 \n";
+	
+	size_t l = 0;
+	for (size_t i = 0; i < 16; i++)
+	{
+		cout << "	       " << hex << i << "  ";
+		cout << "|      ";
+		for (size_t j = 0; j < 16; j++)
+		{
+			if (l > 255)
+			{
+				break;
+			}
+			cout <<memory.cells[l] << " ";
+			l++;
+		}
+		cout << "      |";
+		cout << endl;
+
+	}
+
+	cout << "		  +------------------------------------------------------------+\n";
+	cout << "		  |                         Registers                          |\n";
+	cout << "		  +------------------------------------------------------------+\n";
+	for (size_t i = 0; i < 16; i++) {
+		cout << "		  |      ";
+		cout << "R" << i << "     :     " << registers[i].getValue();
+		cout << "                                       |" << endl;
+
+	}
+		cout << "		  +------------------------------------------------------------+\n";
+		cout << endl;
+
+}
