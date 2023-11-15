@@ -293,3 +293,9 @@ void Machine::displayBgad()
 		cout << endl;
 
 }
+
+void Machine::clearMemory()  // --> added in this commit
+{
+	fill(memory.cells.begin(), memory.cells.end(), "00");
+	cout << "Memory has been cleared." << endl;
+}
