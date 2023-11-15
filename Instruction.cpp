@@ -18,6 +18,16 @@ void LoadInstructiond::excute()
 {
 	registers.setValue(value);
 }
+
+StoreatMemory::StoreatMemory(int memory_address, Register& registers, Memory& memory) : memory_address(memory_address), registers(registers), memory(memory) {}
+
+
+void StoreatMemory::excute()
+{
+	string value = registers.getValue();
+	memory.store(memory_address, value);
+}
+
 AddComopliments::AddComopliments(Register& r1, Register& r2, Register& r3, ALU res) : r1(r1), r2(r2), r3(r3), res(res)
 {
 	value1 = 0;
