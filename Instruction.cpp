@@ -85,3 +85,11 @@ void AddComopliments::excute()
 	}
 	r3.setValue(val3);
 }
+
+MovetoRegister::MovetoRegister(Register& register1, Register& register2) : register1(register1), register2(register2) {} // --> Added in this commit
+
+void MovetoRegister::excute()
+{
+	string value = register1.getValue();
+	register2.setValue(value);
+}
